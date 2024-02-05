@@ -15,4 +15,4 @@
 
 ## Demo
 
-You can view a barebones demo at [instanotes.vercel.app](https://instanotes.vercel.app/).
+You can view the deployed version at [instanotes.vercel.app](https://instanotes.vercel.app/).

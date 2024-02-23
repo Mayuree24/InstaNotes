@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 export default function HeroSection() {
+	// TODO: Add a form to collect emails and notify users when we launch
 	return (
 		<section className="w-full py-6 md:py-24 lg:py-24 xl:py-24">
 			<div className="container px-4 md:px-6">

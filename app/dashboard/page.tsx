@@ -1,7 +1,15 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+
+const generateNoteId = () => {
+  return uuidv4();
+};
 
 function Dashboard() {
-	return <div>Dashboard</div>
+  return (
+    <Link href={`/dashboard/note/${generateNoteId()}`}>Create a new note</Link>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

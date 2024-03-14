@@ -5,9 +5,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 export default function RichTextNote({
+  setNoteContent,
   className,
   NoteId,
 }: {
+  setNoteContent: (note: string) => void;
   className?: string;
   NoteId?: string;
 }) {
@@ -20,6 +22,9 @@ export default function RichTextNote({
         ref={reactQuillRef}
         className="mb-4 h-full w-full bg-white"
         theme="snow"
+        onChange={(content) => {
+          setNoteContent(content);
+        }}
         defaultValue="Hello InstaNoters, Begin writing the notes you want"
       />
     </div>

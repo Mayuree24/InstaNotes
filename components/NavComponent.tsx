@@ -5,7 +5,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export async function NavComponent() {
+export async function NavComponent(props: any) {
   const supabase = createServerComponentClient({ cookies });
 
   const {

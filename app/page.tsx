@@ -7,15 +7,14 @@ import Header from "@/components/Header";
 import ReviewSection from "@/components/ReviewSection";
 import GetStartedSection from "@/components/GetStartedSection";
 
-export default async function Index() {
+export default async function Index({
+  searchParams,
+}: {
+  searchParams: { message: string; code: string };
+}) {
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-2">
-      <NavComponent />
-
-      {/* <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-          
-        </div> */}
-
+      <NavComponent jwt={searchParams.code} />
       <HeroSection />
       <ReviewSection />
       <GetStartedSection />

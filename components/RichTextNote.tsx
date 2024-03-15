@@ -6,14 +6,15 @@ import "react-quill/dist/quill.snow.css";
 
 export default function RichTextNote({
   setNoteContent,
+  noteContent,
   className,
   NoteId,
 }: {
+  noteContent?: Record<string, any>;
   setNoteContent: (note: string) => void;
   className?: string;
   NoteId?: string;
 }) {
-  const [value, setValue] = useState("");
   const reactQuillRef = useRef(null);
 
   return (
@@ -25,7 +26,10 @@ export default function RichTextNote({
         onChange={(content) => {
           setNoteContent(content);
         }}
-        defaultValue="Hello InstaNoters, Begin writing the notes you want"
+        defaultValue={
+          noteContent?.content ||
+          "Hello InstaNoters, Begin writing the notes you want"
+        }
       />
     </div>
   );

@@ -5,16 +5,6 @@ import Link from "next/link";
 import React from "react";
 
 async function Dashboard() {
-  const supabase = createClient(cookies());
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/login");
-  }
-  console.log("user:", user.id);
   return (
     <div className="grid h-dvh w-full place-content-center">
       <Link

@@ -3,6 +3,8 @@ import React from "react";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import LogoutButton from "./LogoutButton";
+import { IoMdAdd } from "react-icons/io";
+import NotesRenderer from "./NotesRenderer";
 
 async function Sidebar() {
   const supabase = createServerComponentClient({ cookies });
@@ -11,19 +13,30 @@ async function Sidebar() {
     error,
   } = await supabase.auth.getUser();
 
+  const fetchNotes = async () => {
+    let { data: notes, error: fetchError } = await supabase
+      .from("notes")
+      .select("*");
+
+    if (fetchError) {
+      console.log({ fetchError });
+    }
+    return notes;
+  };
+  let notesList = await fetchNotes();
+
   return (
-    <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 ">
-      <div className="flex w-full flex-col justify-start gap-4 bg-red-100 p-4">
-        <p className="text-xl font-bold">InstaNotes</p>
-        <Link className="" href="/note/noteId">
-          <div className="flex flex-col rounded-md bg-white px-3 py-2 animate-in">
-            <p className="mb-0 text-base ">Note Title</p>
-            <p className="text-xs text-zinc-500">Date Added/Updated</p>
-          </div>
-        </Link>
-      </div>
-      <div className="w-full p-4">
-        <div className=" flex  items-center justify-between rounded-md bg-white p-4">
+    <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 p-2 ">
+      <p className="text-xl font-bold">InstaNotes</p>
+      <Link className="my-2 w-full" href="/dashboard/note/new">
+        <div className="flex w-full items-center justify-center gap-2 rounded-md bg-white px-3 py-2 animate-in">
+          <IoMdAdd />
+          <p className="mb-0 text-base "> New Note</p>
+        </div>
+      </Link>
+      <NotesRenderer notesList={notesList as { id: string; title: string }[]} />
+      <div className="w-full">
+        <div className=" mt-2  flex items-center justify-between rounded-md bg-white p-4 py-2">
           <div className="flex items-center ">
             <img
               src="https://avatar.iran.liara.run/public/3"

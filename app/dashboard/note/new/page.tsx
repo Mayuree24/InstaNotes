@@ -1,11 +1,13 @@
 "use client";
 
-import RichTextNote from "@/components/RichTextNote";
+// import RichTextNote from "";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
+import dynamic from "next/dynamic";
+const RichTextNote = dynamic(() => import("@/components/RichTextNote"));
 
 type NoteProps = {
   params: {

@@ -15,7 +15,6 @@ type NoteProps = {
 
 function Note({ params }: NoteProps) {
   const router = useRouter();
-  const note = {};
   const [noteContent, setNoteContent] = React.useState(
     "<p>Hello InstaNoters, Begin writing the notes you want</p>",
   );
@@ -30,16 +29,6 @@ function Note({ params }: NoteProps) {
       return null;
     }
     return user?.id;
-  };
-  const fetchNoteDetails = async () => {
-    let { data: note, error: fetchError } = await supabase
-      .from("notes")
-      .select("*")
-      .eq("id", params.id);
-    if (fetchError) {
-      console.log({ fetchError });
-    }
-    return note;
   };
   const handleNoteSave = async () => {
     // console.log("note:", noteContent);

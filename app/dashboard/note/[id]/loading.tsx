@@ -1,22 +1,19 @@
 "use client";
 
 import React from "react";
-import { LineWave } from "react-loader-spinner";
+import { Puff } from "react-loader-spinner";
 
 function loading() {
   return (
     <div className="grid h-dvh place-content-center">
-      <LineWave
+      <Puff
         visible={true}
-        height="400"
-        width="400"
+        height="80"
+        width="80"
         color="#4fa94d"
-        ariaLabel="line-wave-loading"
+        ariaLabel="puff-loading"
         wrapperStyle={{}}
         wrapperClass=""
-        firstLineColor=""
-        middleLineColor=""
-        lastLineColor=""
       />
     </div>
   );

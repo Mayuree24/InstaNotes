@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import RichTextNote from "@/components/RichTextNote.jsx";
+import RichTextNote from "@/components/Sidebar/RichTextNote.jsx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";

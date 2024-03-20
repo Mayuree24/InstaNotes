@@ -1,8 +1,6 @@
 import { NavComponent } from "../components/NavComponent";
 import HeroSection from "../components/HeroSection";
 import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/SignUpUserSteps";
 import Header from "@/components/Header";
 import ReviewSection from "@/components/ReviewSection";
 import GetStartedSection from "@/components/GetStartedSection";

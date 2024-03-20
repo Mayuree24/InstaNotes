@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "@/components/Sidebar/LogoutButton";
 import { IoMdAdd } from "react-icons/io";
 import NotesRenderer from "./NotesRenderer";
 

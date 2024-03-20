@@ -19,11 +19,6 @@ export default function RichTextNote({
   noteContent,
   className,
   NoteId,
-}: {
-  noteContent?: Record<string, any>;
-  setNoteContent: (note: string) => void;
-  className?: string;
-  NoteId?: string;
 }) {
   const reactQuillRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
@@ -38,7 +33,7 @@ export default function RichTextNote({
           ref={reactQuillRef}
           className="mb-4 h-full w-full bg-white"
           theme="snow"
-          onChange={(content: string): void => {
+          onChange={(content) => {
             setNoteContent(content);
           }}
           defaultValue={

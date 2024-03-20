@@ -66,7 +66,12 @@ function Note({ params }: NoteProps) {
           Save
         </Button>
       </div>
-      <RichTextNote setNoteContent={setNoteContent} NoteId={params.id} />
+      <RichTextNote
+        setNoteContent={setNoteContent}
+        NoteId={params.id}
+        noteContent={undefined}
+        className={undefined}
+      />
     </div>
   );
 }

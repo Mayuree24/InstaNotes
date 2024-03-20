@@ -27,7 +27,9 @@ async function Sidebar() {
 
   return (
     <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 p-2 ">
-      <p className="text-xl font-bold">InstaNotes</p>
+      <Link href="/">
+        <p className="pt-2 text-xl font-bold">InstaNotes</p>
+      </Link>
       <Link className="my-2 w-full" href="/dashboard/note/new">
         <div className="flex w-full items-center justify-center gap-2 rounded-md bg-white px-3 py-2 animate-in">
           <IoMdAdd />

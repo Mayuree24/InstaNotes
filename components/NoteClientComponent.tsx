@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import RichTextNote from "@/components/RichTextNote";
+import RichTextNote from "@/components/RichTextNote.jsx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";
@@ -87,7 +87,12 @@ function NoteClientComponent({
           </Button>
         </div>
       </div>
-      <RichTextNote noteContent={note} setNoteContent={setNoteContent} />
+      <RichTextNote
+        noteContent={note}
+        setNoteContent={setNoteContent}
+        className={undefined}
+        NoteId={undefined}
+      />
     </div>
   );
 }

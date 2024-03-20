@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import SidebarNote from "./SidebarNote";
 import { createClient } from "@/utils/supabase/client";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type NotesRendererProps = {
   notesList: { id: string; title: string }[];
@@ -48,8 +49,12 @@ function NotesRenderer({ notesList }: NotesRendererProps) {
     });
   }, [areNotesStale]);
 
+  const [parent, enableAnimation] = useAutoAnimate({});
   return (
-    <div className="flex h-full w-full flex-col justify-start gap-2 overflow-y-auto rounded-md bg-white pt-2 ">
+    <div
+      ref={parent}
+      className="flex h-full w-full flex-col justify-start gap-2 overflow-y-auto rounded-md bg-white pt-2 "
+    >
       {notesListState?.map((note, index) => {
         return <SidebarNote key={index} note={note} />;
       })}

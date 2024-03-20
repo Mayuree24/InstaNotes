@@ -55,7 +55,7 @@ function Note({ params }: NoteProps) {
     }
   };
   return (
-    <div className="h-full p-4">
+    <div className="h-full p-4 animate-in">
       <div className="mb-4 flex items-center justify-between">
         <Input
           className="title w-[30ch] rounded-full"

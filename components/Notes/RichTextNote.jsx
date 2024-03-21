@@ -7,7 +7,10 @@ import dynamic from "next/dynamic";
 const QuillNoSSRWrapper = dynamic(
   async () => {
     const { default: RQ } = await import("react-quill");
-    return ({ ...props }) => <RQ {...props} />;
+    const ForwardedRefQuill = React.forwardRef((props, ref) => (
+      <RQ ref={ref} {...props} />
+    ));
+    return ForwardedRefQuill;
   },
   {
     ssr: false,

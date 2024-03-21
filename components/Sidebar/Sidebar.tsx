@@ -5,18 +5,22 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import LogoutButton from "@/components/Sidebar/LogoutButton";
 import { IoMdAdd } from "react-icons/io";
 import NotesRenderer from "./NotesRenderer";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 async function Sidebar() {
   const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  //   error,
+  // } = await supabase.auth.getUser();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
   const fetchNotes = async () => {
     let { data: notes, error: fetchError } = await supabase
       .from("notes")
-      .select("*");
+      .select("*")
+      .eq("user_id", user?.id);
 
     if (fetchError) {
       console.log({ fetchError });

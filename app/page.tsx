@@ -26,7 +26,7 @@ export default async function Index({
             className="font-bold hover:underline"
             rel="noreferrer"
           >
-            a group at Conestoga College
+            <strong>Group6</strong> at Conestoga College
           </a>
         </p>
       </footer>

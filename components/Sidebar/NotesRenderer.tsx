@@ -11,10 +11,11 @@ type NotesRendererProps = {
   notesList: { id: string; title: string }[];
 };
 function NotesRenderer({ notesList }: NotesRendererProps) {
-  const { user, isLoading } = useKindeBrowserClient();
+  const { user } = useKindeBrowserClient();
   const supabase = createClient();
   const [notesListState, setnotesListState] = useState<any>(notesList);
   const [areNotesStale, setAreNotesStale] = useState(false);
+
   const channels = supabase
     .channel("custom-update-channel")
     .on(

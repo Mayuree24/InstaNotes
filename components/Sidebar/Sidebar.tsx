@@ -28,6 +28,17 @@ async function Sidebar() {
     return notes;
   };
   let notesList = await fetchNotes();
+  const fetchFolders = async () => {
+    let { data: folders, error: fetchError } = await supabase
+      .from("folders")
+      .select("*")
+      .eq("user_id", user?.id);
+
+    if (fetchError) {
+      console.log({ fetchError });
+    }
+    return folders;
+  };
 
   return (
     <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 p-2 ">

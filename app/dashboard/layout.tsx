@@ -4,20 +4,16 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import Sidebar from "@/components/Sidebar";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { redirect } from "next/navigation";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createClient(cookies());
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
   if (!user) {
-    return redirect("/login");
+    return redirect("/");
   }
   return (
     <main className="h-dvh w-screen">

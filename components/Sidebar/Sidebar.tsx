@@ -2,21 +2,25 @@ import Link from "next/link";
 import React from "react";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "@/components/Sidebar/LogoutButton";
 import { IoMdAdd } from "react-icons/io";
 import NotesRenderer from "./NotesRenderer";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 async function Sidebar() {
   const supabase = createServerComponentClient({ cookies });
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  //   error,
+  // } = await supabase.auth.getUser();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
   const fetchNotes = async () => {
     let { data: notes, error: fetchError } = await supabase
       .from("notes")
-      .select("*");
+      .select("*")
+      .eq("user_id", user?.id);
 
     if (fetchError) {
       console.log({ fetchError });
@@ -27,7 +31,9 @@ async function Sidebar() {
 
   return (
     <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 p-2 ">
-      <p className="text-xl font-bold">InstaNotes</p>
+      <Link href="/">
+        <p className="pt-2 text-xl font-bold">InstaNotes</p>
+      </Link>
       <Link className="my-2 w-full" href="/dashboard/note/new">
         <div className="flex w-full items-center justify-center gap-2 rounded-md bg-white px-3 py-2 animate-in">
           <IoMdAdd />

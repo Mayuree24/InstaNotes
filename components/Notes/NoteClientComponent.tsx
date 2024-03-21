@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import RichTextNote from "@/components/RichTextNote";
+import RichTextNote from "@/components/Notes/RichTextNote.jsx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";
@@ -18,11 +18,12 @@ function NoteClientComponent({
   const [noteContent, setNoteContent] = React.useState(
     "<p>Hello InstaNoters, Begin writing the notes you want</p>",
   );
-  const [noteTitle, setNoteTitle] = React.useState("Note Title");
+  const [noteTitle, setNoteTitle] = React.useState(note.title || "Note Title");
   const supabase = createClient();
   const handleNoteSave = async () => {
     console.log("note:", noteContent);
     console.log("title:", noteTitle);
+    console.log("userId:", userId);
     if (userId && !noteId) {
       const { error } = await supabase.from("notes").insert({
         content: noteContent,
@@ -34,8 +35,8 @@ function NoteClientComponent({
       }
     } else {
       console.log("updating note");
-      console.log("note:", noteContent);
-      console.log("title:", noteTitle);
+      console.log("update note:", noteContent);
+      console.log("update title:", noteTitle);
       const { error } = await supabase
         .from("notes")
         .update({
@@ -46,7 +47,7 @@ function NoteClientComponent({
         .select();
 
       if (error) {
-        console.log(error);
+        console.log("error saving", error);
       }
       console.log("note updated");
     }
@@ -87,7 +88,12 @@ function NoteClientComponent({
           </Button>
         </div>
       </div>
-      <RichTextNote noteContent={note} setNoteContent={setNoteContent} />
+      <RichTextNote
+        noteContent={note}
+        setNoteContent={setNoteContent}
+        className={undefined}
+        NoteId={undefined}
+      />
     </div>
   );
 }

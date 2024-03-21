@@ -1,5 +1,6 @@
-import NoteClientComponent from "@/components/NoteClientComponent";
+import NoteClientComponent from "@/components/Notes/NoteClientComponent";
 import { createClient } from "@/utils/supabase/server";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { cookies } from "next/headers";
 
 type NoteProps = {
@@ -10,13 +11,9 @@ type NoteProps = {
 
 async function Note({ params }: NoteProps) {
   const supabase = createClient(cookies());
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (error) {
-    return null;
-  }
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   const fetchNoteDetails = async () => {
     let { data: note, error: fetchError } = await supabase
       .from("notes")

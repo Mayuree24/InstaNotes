@@ -13,10 +13,14 @@ const RichTextNote = dynamic(() => import("@/components/Notes/RichTextNote"));
 type NoteProps = {
   params: {
     id: string;
+    folderId: string;
+  };
+  searchParams: {
+    folderId: string;
   };
 };
 
-function Note({ params }: NoteProps) {
+function Note({ params, searchParams }: NoteProps) {
   const router = useRouter();
   const { user } = useKindeBrowserClient();
   const [noteContent, setNoteContent] = React.useState(
@@ -28,6 +32,7 @@ function Note({ params }: NoteProps) {
     // console.log("note:", noteContent);
     // console.log("id:", params.id);
     // console.log("title:", noteTitle);
+    // console.log("folderId:", searchParams.folderId);
     if (user) {
       const { error, data } = await supabase
         .from("notes")
@@ -35,6 +40,7 @@ function Note({ params }: NoteProps) {
           content: noteContent,
           title: noteTitle,
           user_id: user?.id,
+          folder_id: searchParams.folderId,
         })
         .select("*");
 

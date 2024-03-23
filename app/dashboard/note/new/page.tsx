@@ -1,12 +1,10 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";
 import React from "react";
 import dynamic from "next/dynamic";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 const RichTextNote = dynamic(() => import("@/components/Notes/RichTextNote"));
 
@@ -40,7 +38,10 @@ function Note({ params, searchParams }: NoteProps) {
           content: noteContent,
           title: noteTitle,
           user_id: user?.id,
-          folder_id: searchParams.folderId,
+          folder_id:
+            searchParams.folderId === "unassigned"
+              ? null
+              : searchParams.folderId,
         })
         .select("*");
 

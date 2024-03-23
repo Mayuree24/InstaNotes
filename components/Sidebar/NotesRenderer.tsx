@@ -5,7 +5,7 @@ import SidebarNote from "./SidebarNote";
 import { createClient } from "@/utils/supabase/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { getFolders, getNotes } from "@/app/actions";
+import { getFoldersAction, getNotesAction } from "@/app/actions";
 import FolderCollapsible from "./FolderCollapsible";
 import {
   FolderStructureListType,
@@ -14,6 +14,7 @@ import {
   NotesListType,
   NoteType,
 } from "./Types";
+import { ScrollArea } from "../ui/scroll-area";
 
 type NotesRendererProps = {
   notesList: NotesListType;
@@ -23,6 +24,39 @@ function NotesRenderer({ notesList, foldersList }: NotesRendererProps) {
   const { user } = useKindeBrowserClient();
   const supabase = createClient();
 
+  const getFolderStructure = () => {
+    const folderStructure: FolderStructureListType = foldersListState?.map(
+      (folder) => {
+        const notes: NotesListType = notesListState?.filter(
+          (note: NoteType) => {
+            return note.folder_id === folder.id;
+          },
+        );
+        return {
+          ...folder,
+          notes,
+        };
+      },
+    );
+    const unassignedNotes = notesListState?.filter((note) => {
+      return !note?.folder_id;
+    });
+    if (unassignedNotes.length > 0) {
+      folderStructure.unshift({
+        name: "Notes",
+        id: "unassigned",
+        notes: unassignedNotes as NoteType[],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        user_id:
+          user?.id ||
+          "dummy userId and rest of the fields, it doesnt matter, its for displaying unassigned notes only",
+      });
+    }
+    // console.log("Unassigned Notes: ", unassignedNotes);
+    // console.log("Folder Structure: ", folderStructure);
+    return folderStructure;
+  };
   const [notesListState, setNotesListState] =
     useState<NotesListType>(notesList);
   const [areNotesStale, setAreNotesStale] = useState(false);
@@ -30,7 +64,7 @@ function NotesRenderer({ notesList, foldersList }: NotesRendererProps) {
     useState<FoldersListType>(foldersList);
   const [areFoldersStale, setAreFoldersStale] = useState(false);
   const [folderStructureState, setFolderStructureState] =
-    useState<FolderStructureListType>([]);
+    useState<FolderStructureListType>(getFolderStructure());
 
   const NotesChannel = supabase
     .channel("custom-update-channel")
@@ -58,18 +92,19 @@ function NotesRenderer({ notesList, foldersList }: NotesRendererProps) {
     const updateNotes = async () => {
       if (user?.id) {
         // calling server actions so that the userId check cannot be removed by end user as that would expose all notes
-        const newNotes = await getNotes(user.id);
+        const newNotes = await getNotesAction(user.id);
         setNotesListState(newNotes as NotesListType);
       }
     };
     updateNotes();
     setAreNotesStale(false);
+    // console.log("Notes updated from useEffect", notesListState);
   }, [areNotesStale, user]);
 
   useEffect(() => {
     const updateFolders = async () => {
       if (user?.id) {
-        const newFolders = await getFolders(user.id);
+        const newFolders = await getFoldersAction(user.id);
         setFoldersListState(newFolders as FoldersListType);
       }
     };
@@ -81,23 +116,7 @@ function NotesRenderer({ notesList, foldersList }: NotesRendererProps) {
   const [parent] = useAutoAnimate({});
 
   useEffect(() => {
-    const folderStructure: FolderStructureListType = foldersListState?.map(
-      (folder) => {
-        const notes: NotesListType = notesListState?.filter(
-          (note: NoteType) => {
-            if (note.folder_id === null) {
-              return folder.name === "Default";
-            } else {
-              return note.folder_id === folder.id;
-            }
-          },
-        );
-        return {
-          ...folder,
-          notes,
-        };
-      },
-    );
+    const folderStructure = getFolderStructure();
     setFolderStructureState(folderStructure);
     // console.log(
     //   "Folder Structure updated from useEffect",

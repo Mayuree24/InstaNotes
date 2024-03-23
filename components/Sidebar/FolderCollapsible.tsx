@@ -10,24 +10,16 @@ import SidebarNote from "./SidebarNote";
 import Link from "next/link";
 import {
   ContextMenu,
-  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import { Button } from "../ui/button";
+import DeleteFolder from "./DeleteFolderButton";
+import EditFolderButton from "./EditFolderButton";
+import { ScrollArea } from "../ui/scroll-area";
 
 function FolderCollapsible({ folderName, notesList, folderId }: any) {
   const [parent] = useAutoAnimate({});
-
   return (
     <div className="overflow-clip rounded-md">
       <ContextMenu>
@@ -36,9 +28,11 @@ function FolderCollapsible({ folderName, notesList, folderId }: any) {
             <CollapsibleTrigger className="w-full bg-white p-2 ">
               <div className=" flex items-center justify-between  px-1">
                 <p>{folderName === "Default" ? "Notes" : folderName}</p>
-                <Link href={`/dashboard/note/new?folderId=${folderId}`}>
-                  <MdAdd className="rounded-full text-2xl text-zinc-500 hover:bg-zinc-400 hover:text-white" />
-                </Link>
+                <div className="flex">
+                  <Link href={`/dashboard/note/new?folderId=${folderId}`}>
+                    <MdAdd className="rounded-full text-2xl text-zinc-500 hover:bg-zinc-400 hover:text-white" />
+                  </Link>
+                </div>
               </div>
             </CollapsibleTrigger>
 
@@ -57,8 +51,12 @@ function FolderCollapsible({ folderName, notesList, folderId }: any) {
           </Collapsible>
         </ContextMenuTrigger>
         <ContextMenuContent className="w-64">
-          <ContextMenuItem>Rename Folder</ContextMenuItem>
-          <ContextMenuItem>Delete Folder</ContextMenuItem>
+          <ContextMenuItem onSelect={(e) => e.preventDefault()}>
+            <EditFolderButton folderId={folderId} />
+          </ContextMenuItem>
+          <ContextMenuItem onSelect={(e) => e.preventDefault()}>
+            <DeleteFolder folderId={folderId} />
+          </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
     </div>

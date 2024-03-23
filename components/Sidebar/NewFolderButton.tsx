@@ -6,7 +6,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { handleCreateFolder } from "@/app/actions";
+import { handleCreateFolderAction } from "@/app/actions";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,10 @@ function NewFolderButton({ className }: { className: string }) {
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="mb-[60px] rounded-b-md bg-white py-2 pt-0">
-        <form className="flex flex-col gap-2 p-2" action={handleCreateFolder}>
+        <form
+          className="flex flex-col gap-2 p-2"
+          action={handleCreateFolderAction}
+        >
           <Input required name="folderName" placeholder="Folder Name" />
           <div className="flex w-full items-center justify-between gap-4">
             <Button

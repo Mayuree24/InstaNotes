@@ -40,6 +40,7 @@ async function Sidebar() {
   //Supabase data fetching
   const notesList = await fetchNotes();
   const foldersList = await fetchFolders();
+  console.log("foldersList: ", foldersList);
   return (
     <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 p-2 ">
       <Link href="/">

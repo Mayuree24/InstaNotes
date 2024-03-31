@@ -5,6 +5,7 @@ import RichTextNote from "@/components/Notes/RichTextNote.jsx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 function NoteClientComponent({
   note,
@@ -18,8 +19,10 @@ function NoteClientComponent({
   const [noteContent, setNoteContent] = React.useState(
     "<p>Hello InstaNoters, Begin writing the notes you want</p>",
   );
-  const [noteTitle, setNoteTitle] = React.useState(note.title || "Note Title");
+  const [noteTitle, setNoteTitle] = React.useState(note?.title || "Note Title");
   const supabase = createClient();
+  const router = useRouter();
+
   const handleNoteSave = async () => {
     console.log("note:", noteContent);
     console.log("title:", noteTitle);
@@ -64,6 +67,7 @@ function NoteClientComponent({
         console.log(error);
       }
       console.log("note deleted");
+      router.push("/dashboard/note/new");
     }
   };
   return (
@@ -71,7 +75,7 @@ function NoteClientComponent({
       <div className="mb-4 flex items-center justify-between">
         <Input
           className="title w-[30ch] rounded-full"
-          defaultValue={note.title || "Note Title"}
+          defaultValue={note?.title || "Note Title"}
           onChange={(e) => setNoteTitle(e.target.value)}
           placeholder="Note Title"
         />

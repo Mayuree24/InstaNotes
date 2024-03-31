@@ -1,7 +1,6 @@
 import { NavComponent } from "../components/NavComponent";
 import HeroSection from "../components/HeroSection";
 import { createClient } from "@/utils/supabase/server";
-import Header from "@/components/Header";
 import ReviewSection from "@/components/ReviewSection";
 import GetStartedSection from "@/components/GetStartedSection";
 

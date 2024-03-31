@@ -1,9 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-// import { cookies } from "next/headers";
-// import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-
 import {
   RegisterLink,
   LoginLink,

@@ -7,6 +7,7 @@ import NotesRenderer from "./NotesRenderer";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { FoldersListType, NotesListType } from "./Types";
 import NewFolderButton from "./NewFolderButton";
+import NotesSearchButton from "./NotesSearchButton";
 
 async function Sidebar() {
   const supabase = createServerComponentClient({ cookies });
@@ -43,9 +44,12 @@ async function Sidebar() {
   console.log("foldersList: ", foldersList);
   return (
     <div className="box-border flex h-full w-full flex-col items-start justify-between bg-zinc-100 p-2 ">
-      <Link href="/">
-        <p className="pt-2 text-xl font-bold">InstaNotes</p>
-      </Link>
+      <div className="mt-2 flex w-full items-center justify-between">
+        <Link href="/">
+          <p className=" text-xl font-bold">InstaNotes</p>
+        </Link>
+        <NotesSearchButton />
+      </div>
       <NewFolderButton className="mb-4 mt-2" />
       <div className="flex h-full w-full flex-col items-start justify-start gap-2 overflow-y-auto">
         <NotesRenderer

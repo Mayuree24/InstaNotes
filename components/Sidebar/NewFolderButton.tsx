@@ -34,7 +34,7 @@ function NewFolderButton({ className }: { className: string }) {
             </Button>
             <CollapsibleTrigger>
               <Button type="reset" variant="ghost" className="w-full">
-                Cancel
+                Close
               </Button>
             </CollapsibleTrigger>
           </div>

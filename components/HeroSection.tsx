@@ -31,16 +31,11 @@ export default function HeroSection() {
               </p>
             </div>
             <div className="w-full max-w-sm space-y-2">
-              <form className="">
-                <RegisterLink>
-                  <Button className="" size="lg" type="submit">
-                    Sign Up
-                  </Button>
-                </RegisterLink>
-              </form>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Sign up to get notified when we launch.
-              </p>
+              <RegisterLink>
+                <Button className="" size="lg" type="submit">
+                  Sign Up
+                </Button>
+              </RegisterLink>
             </div>
           </div>
         </div>

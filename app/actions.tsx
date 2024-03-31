@@ -74,3 +74,24 @@ export async function handleFolderDeleteAction(formData: FormData) {
   }
   return folder;
 }
+
+export async function handleSearchNotesAction(
+  prevState: any,
+  queryData: FormData,
+) {
+  const supabase = createClient(cookies());
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  const { data: notes, error: fetchError } = await supabase
+    .from("notes")
+    .select("*")
+    .or(
+      `content.ilike.%${queryData.get("searchQuery")}%,title.ilike.%${queryData.get("searchQuery")}%`,
+    )
+    .eq("user_id", user?.id);
+
+  if (fetchError) {
+    console.log({ fetchError });
+  }
+  return notes;
+}
